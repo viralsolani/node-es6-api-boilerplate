@@ -2,6 +2,23 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
+const db = require('./models/index');
+
+
+// Sync Sequelize Database
+db.sequelize.sync()
+.catch(function(err)
+{
+  console.log('Server failed to start due to error: %s', err);
+});
+
+const env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+if (env === 'development' || env === 'test') {
+  // Register the Babel require hook
+  require('babel-core/register');
+}
+
 // Set up the express app
 const app = express();
 

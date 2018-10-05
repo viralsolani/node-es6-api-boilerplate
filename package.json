@@ -2,9 +2,10 @@
   "name": "node-es6-webpack-api-boilerplate",
   "version": "1.0.0",
   "description": "An API Boilerplate in Node to create a ready-to-use REST API in seconds",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start:dev": "nodemon ./bin/www",
+    "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
