@@ -34,7 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'ACTIVE',
       comment: "User is active, inactive or deleted"
     },
-  }, {});
+  }, {
+    freezeTableName: true,
+    tableName: 'roles',
+  });
   Role.associate = function (models) {
     // associations can be defined here
   };

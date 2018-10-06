@@ -87,7 +87,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       comment: "Contact Phone Number"
     }
-  }, {});
+  }, {
+    freezeTableName: true,
+    tableName: 'companies',
+  });
   Company.associate = function (models) {
     // associations can be defined here
   };
