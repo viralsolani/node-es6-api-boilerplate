@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
       comment: "Primary and auto increment key of the table"
     },
 
+    companyId: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      comment: "Forign key for Company"
+    },
+
     name: {
       type: DataTypes.STRING,
       allowNull: false,
