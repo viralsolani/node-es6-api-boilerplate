@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       field: "email",
       type: DataTypes.STRING(50),
       allowNull: false,
+      unique: true,
       comment: "Email of company",
       validate: {
         isUnique: function (value, next) {
@@ -86,6 +87,14 @@ module.exports = (sequelize, DataTypes) => {
     contactPhone: {
       type: DataTypes.STRING,
       comment: "Contact Phone Number"
+    },
+
+    status: {
+      field: "status",
+      type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
+      allowNull: false,
+      defaultValue: 'ACTIVE',
+      comment: "User is active, inactive or deleted"
     }
   }, {
     freezeTableName: true,

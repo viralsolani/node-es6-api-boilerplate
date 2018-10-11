@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
@@ -7,12 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
       comment: "Primary and auto increment key of the table"
-    },
-
-    companyId: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      comment: "Forign key for Company"
     },
 
     firstName: {
@@ -91,7 +86,12 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = function (models) {
-    // associations can be defined here
+    models.User.belongsTo(models.Company, {
+      onDelete: "CASCADE",
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
 
   return User;

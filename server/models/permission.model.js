@@ -9,12 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       comment: "Primary and auto increment key of the table"
     },
 
-    companyId: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      comment: "Forign key for Company"
-    },
-
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -29,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
 
     sort: {
       type: DataTypes.SMALLINT,
-      allowNull: false,
       comment: "For Sorting Role"
     },
 
@@ -46,7 +39,12 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Permission.associate = function (models) {
-    // associations can be defined here
+    models.Permission.belongsTo(models.Company, {
+      onDelete: "CASCADE",
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
 
   return Permission;
