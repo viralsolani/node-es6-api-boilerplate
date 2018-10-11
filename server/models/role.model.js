@@ -45,6 +45,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
+
+    models.Role.belongsToMany(models.Permission, {
+      through: 'permission_role',
+      timestamps: false
+    });
+
   };
   return Role;
 };

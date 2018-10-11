@@ -92,6 +92,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
+
+    models.User.belongsToMany(models.Role, {
+      through: 'role_user',
+      timestamps: false
+    });
+
+    models.User.belongsToMany(models.Permission, {
+      through: 'permission_user',
+      timestamps: false
+    });
   };
 
   return User;
