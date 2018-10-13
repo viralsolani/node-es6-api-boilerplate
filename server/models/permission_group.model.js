@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Role = sequelize.define('Role', {
+  const PermissionGroup = sequelize.define('PermissionGroup', {
     id: {
       type: DataTypes.INTEGER(2).UNSIGNED,
       allowNull: false,
@@ -8,18 +8,18 @@ module.exports = (sequelize, DataTypes) => {
       comment: 'Primary and auto increment key of the table',
     },
 
-    roleName: {
-      field: 'role_name',
+    groupName: {
+      field: 'group_name',
       type: DataTypes.STRING(50),
       allowNull: false,
-      comment: 'Name of role',
+      comment: 'Name of group',
     },
 
     description: {
       type: DataTypes.TEXT,
       allowNull: true,
       defaultValue: null,
-      comment: 'Role description',
+      comment: 'PermissionGroup description',
     },
 
     status: {
@@ -27,34 +27,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('ACTIVE', 'INACTIVE'),
       allowNull: false,
       defaultValue: 'ACTIVE',
-      comment: 'Role is active, inactive',
+      comment: 'Permission group is active, inactive',
     },
   }, {
     freezeTableName: true,
-    tableName: 'role',
+    tableName: 'permission_group',
   });
 
-  Role.associate = (models) => {
-    Role.hasMany(models.User, {
+  PermissionGroup.associate = (models) => {
+    PermissionGroup.hasMany(models.Permission, {
       as: 'Users',
       constraints: true,
       foreignKey: {
-        name: 'roleId',
-        field: 'role_id',
-        allowNull: false,
-      },
-    });
-
-    Role.belongsToMany(models.Permission, {
-      through: 'role_permission',
-      as: 'RolePermission',
-      constraints: true,
-      foreignKey: {
-        name: 'roleId',
-        field: 'role_id',
+        name: 'permissionGroupId',
+        field: 'permission_group_id',
         allowNull: false,
       },
     });
   };
-  return Role;
+  return PermissionGroup;
 };

@@ -1,51 +1,71 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Permission = sequelize.define('Permission', {
     id: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER(2).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
-      comment: "Primary and auto increment key of the table"
+      comment: 'Primary and auto increment key of the table',
     },
 
-    name: {
-      type: DataTypes.STRING,
+    permissionName: {
+      field: 'permission_name',
+      type: DataTypes.STRING(50),
       allowNull: false,
-      comment: "Name of Permission"
+      comment: 'Name of permission',
     },
 
-    DisplayName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      comment: "Display Name of Permission"
-    },
-
-    sort: {
-      type: DataTypes.SMALLINT,
-      comment: "For Sorting Role"
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null,
+      comment: 'Permission description',
     },
 
     status: {
-      field: "status",
-      type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
+      field: 'status',
+      type: DataTypes.ENUM('ACTIVE', 'INACTIVE'),
       allowNull: false,
       defaultValue: 'ACTIVE',
-      comment: "User is active, inactive or deleted"
-    }
+      comment: 'Permission is active, inactive',
+    },
   }, {
     freezeTableName: true,
-    tableName: 'permissions',
+    tableName: 'permission',
   });
 
-  Permission.associate = function (models) {
-    models.Permission.belongsTo(models.Company, {
-      onDelete: "CASCADE",
+  Permission.associate = (models) => {
+    Permission.belongsTo(models.PermissionGroup, {
+      as: 'PermissionGroup',
+      constraints: true,
       foreignKey: {
-        allowNull: false
-      }
+        name: 'permissionGroupId',
+        field: 'permission_group_id',
+        allowNull: false,
+      },
+    });
+
+    Permission.belongsToMany(models.Role, {
+      through: 'role_permission',
+      as: 'RolePermission',
+      constraints: true,
+      foreignKey: {
+        name: 'permissionId',
+        field: 'permission_id',
+        allowNull: false,
+      },
+    });
+
+    Permission.belongsToMany(models.User, {
+      through: 'user_permission',
+      as: 'UserPermission',
+      constraints: true,
+      foreignKey: {
+        name: 'permissionId',
+        field: 'permission_id',
+        allowNull: false,
+      },
     });
   };
-
   return Permission;
 };

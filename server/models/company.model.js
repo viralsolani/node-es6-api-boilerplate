@@ -1,107 +1,94 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Company = sequelize.define('Company', {
     id: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
-      comment: "Primary and auto increment key of the table"
+      comment: 'Primary and auto increment key of the table',
     },
 
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      comment: "Company Name"
+    companyName: {
+      field: 'company_name',
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      comment: 'Company Name',
     },
 
     email: {
-      field: "email",
       type: DataTypes.STRING(50),
-      allowNull: false,
-      unique: true,
-      comment: "Email of company",
-      validate: {
-        isUnique: function (value, next) {
-          const self = this;
-
-          Company.find({
-              where: {
-                email: value
-              }
-            })
-            .then(function (company) {
-              if (company && self.id !== company.id) {
-                return next('Email is already in use');
-              }
-
-              return next();
-            })
-            .catch(function (err) {
-              return next(err);
-            });
-        }
-      }
+      allowNull: true,
+      defaultValue: null,
+      comment: 'Company contact email',
     },
 
-    addressLine: {
+    phone: {
+      type: DataTypes.STRING(15),
+      allowNull: true,
+      defaultValue: null,
+      comment: 'Company contact phone',
+    },
+
+    address: {
       type: DataTypes.TEXT,
-      comment: "Address Line 1"
-    },
-
-    addressLine2: {
-      type: DataTypes.TEXT,
-      comment: "Address Line 2"
-    },
-
-    country: {
-      type: DataTypes.STRING,
-      comment: "Country"
+      allowNull: true,
+      defaultValue: null,
+      comment: 'Company address',
     },
 
     state: {
-      type: DataTypes.STRING,
-      comment: "State"
+      type: DataTypes.STRING(50),
+      allowNull: true,
+      defaultValue: null,
+      comment: 'State',
     },
 
     city: {
-      type: DataTypes.STRING,
-      comment: "City"
+      type: DataTypes.STRING(50),
+      allowNull: true,
+      defaultValue: null,
+      comment: 'City',
     },
 
     zip: {
       type: DataTypes.INTEGER(8),
-      comment: "City"
-    },
-
-    contactEmail: {
-      type: DataTypes.STRING,
-      comment: "Contact Email"
-    },
-
-    contactName: {
-      type: DataTypes.STRING,
-      comment: "Contact Name"
-    },
-
-    contactPhone: {
-      type: DataTypes.STRING,
-      comment: "Contact Phone Number"
+      allowNull: true,
+      defaultValue: null,
+      comment: 'Zip code',
     },
 
     status: {
-      field: "status",
-      type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
+      field: 'status',
+      type: DataTypes.ENUM('ACTIVE', 'INACTIVE'),
       allowNull: false,
       defaultValue: 'ACTIVE',
-      comment: "User is active, inactive or deleted"
-    }
+      comment: 'Company is active or inactive',
+    },
   }, {
     freezeTableName: true,
-    tableName: 'companies',
+    tableName: 'company',
   });
-  Company.associate = function (models) {
-    // associations can be defined here
+  Company.associate = (models) => {
+    Company.belongsTo(models.Country, {
+      as: 'Country',
+      constraints: true,
+      foreignKey: {
+        name: 'countryId',
+        field: 'country_id',
+        allowNull: true,
+      },
+    });
+
+    Company.hasMany(models.User, {
+      as: 'Users',
+      constraints: true,
+      foreignKey: {
+        name: 'companyId',
+        field: 'company_id',
+        allowNull: false,
+      },
+    });
   };
   return Company;
 };

@@ -1,106 +1,112 @@
-'use strict';
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
-      comment: "Primary and auto increment key of the table"
+      comment: 'Primary and auto increment key of the table',
     },
 
     firstName: {
-      type: DataTypes.STRING,
+      field: 'first_name',
+      type: DataTypes.STRING(50),
       allowNull: false,
-      comment: "First Name"
+      comment: 'First name',
     },
 
     lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      comment: "Last Name"
+      field: 'last_name',
+      type: DataTypes.STRING(50),
+      allowNull: true,
+      defaultValue: null,
+      comment: 'Last name',
     },
 
     email: {
-      field: "email",
+      field: 'email',
       type: DataTypes.STRING(50),
       allowNull: false,
-      comment: "Email of User",
+      comment: 'Email of user',
       validate: {
-        isUnique: function (value, next) {
+        isUnique(value, next) {
           const self = this;
 
           User.find({
-              where: {
-                email: value
-              }
-            })
-            .then(function (user) {
+            where: {
+              email: value,
+            },
+          })
+            .then((user) => {
               if (user && self.id !== user.id) {
                 return next('Email is already in use');
               }
 
               return next();
             })
-            .catch(function (err) {
-              return next(err);
-            });
-        }
-      }
+            .catch(err => next(err));
+        },
+      },
     },
 
     password: {
-      field: "password",
+      field: 'password',
       type: DataTypes.STRING(255),
       allowNull: false,
-      comment: "User password"
+      comment: 'User password',
     },
 
     salt: DataTypes.STRING,
 
-    password: {
-      field: "password",
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      comment: "User password"
-    },
-
     forgotPwdSalt: {
-      field: "forgot_pwd_salt",
+      field: 'forgot_pwd_salt',
       type: DataTypes.STRING(255),
       allowNull: true,
-      comment: "Forgot password salt"
+      comment: 'Forgot password salt',
     },
 
     status: {
-      field: "status",
-      type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
+      field: 'status',
+      type: DataTypes.ENUM('ACTIVE', 'INACTIVE'),
       allowNull: false,
       defaultValue: 'ACTIVE',
-      comment: "User is active, inactive or deleted"
-    }
+      comment: 'User is active, inactive',
+    },
   }, {
     freezeTableName: true,
     tableName: 'users',
   });
 
-  User.associate = function (models) {
-    models.User.belongsTo(models.Company, {
-      onDelete: "CASCADE",
+  User.associate = (models) => {
+    User.belongsTo(models.Company, {
+      as: 'Company',
+      constraints: true,
       foreignKey: {
-        allowNull: false
-      }
+        name: 'companyId',
+        field: 'company_id',
+        allowNull: false,
+      },
     });
 
-    models.User.belongsToMany(models.Role, {
-      through: 'role_user',
-      timestamps: false
+    User.belongsTo(models.Role, {
+      as: 'Role',
+      constraints: true,
+      foreignKey: {
+        name: 'roleId',
+        field: 'role_id',
+        allowNull: false,
+      },
     });
 
-    models.User.belongsToMany(models.Permission, {
-      through: 'permission_user',
-      timestamps: false
+    User.belongsToMany(models.Permission, {
+      through: 'user_permission',
+      as: 'UserPermission',
+      constraints: true,
+      foreignKey: {
+        name: 'userId',
+        field: 'user_id',
+        allowNull: false,
+      },
     });
   };
 
