@@ -7,12 +7,6 @@ const bodyParser = require('body-parser');
 
 const indexRouter = require('./routes/index');
 
-/*  const env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-if (env === 'development' || env === 'test') {
-  // Register the Babel require hook
-  require('babel-core/register');
-}   */
-
 // Set up the express app
 const app = express();
 
@@ -20,13 +14,16 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+// serves up static files from the public folder. Anything in public/ will just be served up as the file it is
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Log requests to the console.
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
+// populates req.cookies with any cookies that came along with the request
+app.use(cookieParser());
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
