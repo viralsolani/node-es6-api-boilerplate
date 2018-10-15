@@ -35,6 +35,17 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Role.associate = (models) => {
+
+    Role.belongsTo(models.Company, {
+      as: 'Company',
+      constraints: true,
+      foreignKey: {
+        name: 'companyId',
+        field: 'company_id',
+        allowNull: false,
+      },
+    });
+
     Role.hasMany(models.User, {
       as: 'Users',
       constraints: true,
