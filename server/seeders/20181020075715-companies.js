@@ -1,8 +1,6 @@
-'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('company', [{
+    return queryInterface.bulkInsert('companies', [{
       company_name: 'Viral Infotech',
       country_id: 1,
       email: 'solani.viral@gmail.com',
@@ -17,6 +15,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('company', null, {});
-  }
+    return queryInterface.bulkDelete('companies', null, {});
+  },
 };

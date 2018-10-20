@@ -1,8 +1,6 @@
-'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('country', [{
+    return queryInterface.bulkInsert('countries', [{
       country_name: 'India',
       iso2: 'IN',
       iso3: 'IN',
@@ -13,6 +11,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('country', null, {});
-  }
+    return queryInterface.bulkDelete('countries', null, {});
+  },
 };

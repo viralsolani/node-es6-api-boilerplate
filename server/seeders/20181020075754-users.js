@@ -1,5 +1,3 @@
-'use strict';
-
 const faker = require('faker');
 
 module.exports = {
@@ -19,5 +17,5 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('users', null, {});
-  }
+  },
 };
