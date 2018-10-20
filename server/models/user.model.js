@@ -33,10 +33,10 @@ module.exports = (sequelize, DataTypes) => {
           const self = this;
 
           User.find({
-            where: {
-              email: value,
-            },
-          })
+              where: {
+                email: value,
+              },
+            })
             .then((user) => {
               if (user && self.id !== user.id) {
                 return next('Email is already in use');

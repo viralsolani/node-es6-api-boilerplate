@@ -8,7 +8,10 @@ const config = require(`${__dirname}/../config/config.json`)[env]; // eslint-dis
 const db = {};
 
 const {
-  username, password, database, ...otherConfig
+  username,
+  password,
+  database,
+  ...otherConfig
 } = config;
 
 const sequelize = new Sequelize(
@@ -17,9 +20,9 @@ const sequelize = new Sequelize(
 
 fs
   .readdirSync(__dirname)
-  .filter(file => (file.indexOf('.') !== 0)
-    && (file !== basename)
-    && (file.slice(-3) === '.js'))
+  .filter(file => (file.indexOf('.') !== 0) &&
+    (file !== basename) &&
+    (file.slice(-3) === '.js'))
   .forEach((file) => {
     const model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;

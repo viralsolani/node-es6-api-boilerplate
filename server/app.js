@@ -20,7 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Log requests to the console.
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 
 // populates req.cookies with any cookies that came along with the request
 app.use(cookieParser());
