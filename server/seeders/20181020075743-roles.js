@@ -1,6 +1,10 @@
+const faker = require('faker');
+
+const tableName = 'roles';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('roles', [{
+    return queryInterface.bulkInsert(tableName, [{
       company_id: 1,
       role_name: 'Admin',
       description: 'an admin of the app.',
@@ -11,6 +15,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('roles', null, {});
+    return queryInterface.bulkDelete(tableName, null, {});
   },
 };

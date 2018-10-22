@@ -1,6 +1,10 @@
+const faker = require('faker');
+
+const tableName = 'companies';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('companies', [{
+    return queryInterface.bulkInsert(tableName, [{
       company_name: 'Viral Infotech',
       country_id: 1,
       email: 'solani.viral@gmail.com',
@@ -15,6 +19,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('companies', null, {});
+    return queryInterface.bulkDelete(tableName, null, {});
   },
 };

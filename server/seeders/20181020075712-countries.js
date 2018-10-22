@@ -1,16 +1,29 @@
+const faker = require('faker');
+
+const tableName = 'countries';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('countries', [{
-      country_name: 'India',
-      iso2: 'IN',
-      iso3: 'IN',
-      numeric: '1',
-      created_at: new Date(),
-      updated_at: new Date()
-    }], {});
+    return queryInterface.bulkInsert(tableName, [{
+        country_name: 'India',
+        iso2: 'IN',
+        iso3: 'IND',
+        numeric: '356',
+        created_at: new Date(),
+        updated_at: new Date()
+      },
+      {
+        country_name: 'United States',
+        iso2: 'US',
+        iso3: 'USA',
+        numeric: '840',
+        created_at: new Date(),
+        updated_at: new Date()
+      }
+    ], {});
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('countries', null, {});
+    return queryInterface.bulkDelete(tableName, null, {});
   },
 };
