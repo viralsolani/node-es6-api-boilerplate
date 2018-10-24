@@ -2,4 +2,9 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Welcome to
+    b &nbsp; #{user.firstName} #{user.lastName}'s
+    strong
+      i &nbsp; #{user.Company.companyName}
+  p
+    i This change was made to check class based models with relationships.

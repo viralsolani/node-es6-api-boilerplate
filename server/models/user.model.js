@@ -1,114 +1,124 @@
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    id: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-      comment: 'Primary and auto increment key of the table',
-    },
+export default (sequelize, DataTypes) => {
 
-    firstName: {
-      field: 'first_name',
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      comment: 'First name',
-    },
+    class User {
 
-    lastName: {
-      field: 'last_name',
-      type: DataTypes.STRING(50),
-      allowNull: true,
-      defaultValue: null,
-      comment: 'Last name',
-    },
+        static definition = {
+            id: {
+                type: DataTypes.INTEGER(11).UNSIGNED,
+                allowNull: false,
+                primaryKey: true,
+                autoIncrement: true,
+                comment: 'Primary and auto increment key of the table',
+            },
 
-    email: {
-      field: 'email',
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      comment: 'Email of user',
-      validate: {
-        isUnique(value, next) {
-          const self = this;
+            firstName: {
+                field: 'first_name',
+                type: DataTypes.STRING(50),
+                allowNull: false,
+                comment: 'First name',
+            },
 
-          User.find({
-              where: {
-                email: value,
-              },
-            })
-            .then((user) => {
-              if (user && self.id !== user.id) {
-                return next('Email is already in use');
-              }
+            lastName: {
+                field: 'last_name',
+                type: DataTypes.STRING(50),
+                allowNull: true,
+                defaultValue: null,
+                comment: 'Last name',
+            },
 
-              return next();
-            })
-            .catch(err => next(err));
-        },
-      },
-    },
+            email: {
+                field: 'email',
+                type: DataTypes.STRING(50),
+                allowNull: false,
+                comment: 'Email of user',
+                validate: {
+                    isUnique(value, next) {
+                        const self = this;
 
-    password: {
-      field: 'password',
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      comment: 'User password',
-    },
+                        User.find({
+                            where: {
+                                email: value,
+                            },
+                        })
+                            .then((user) => {
+                                if (user && self.id !== user.id) {
+                                    return next('Email is already in use');
+                                }
 
-    salt: DataTypes.STRING,
+                                return next();
+                            })
+                            .catch(err => next(err));
+                    },
+                },
+            },
 
-    forgotPwdSalt: {
-      field: 'forgot_pwd_salt',
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      comment: 'Forgot password salt',
-    },
+            password: {
+                field: 'password',
+                type: DataTypes.STRING(255),
+                allowNull: false,
+                comment: 'User password',
+            },
 
-    status: {
-      field: 'status',
-      type: DataTypes.ENUM('ACTIVE', 'INACTIVE'),
-      allowNull: false,
-      defaultValue: 'ACTIVE',
-      comment: 'User is active, inactive',
-    },
-  }, {
-    freezeTableName: true,
-    tableName: 'users',
-  });
+            salt: DataTypes.STRING,
 
-  User.associate = (models) => {
-    User.belongsTo(models.Company, {
-      as: 'Company',
-      constraints: true,
-      foreignKey: {
-        name: 'companyId',
-        field: 'company_id',
-        allowNull: false,
-      },
-    });
+            forgotPwdSalt: {
+                field: 'forgot_pwd_salt',
+                type: DataTypes.STRING(255),
+                allowNull: true,
+                comment: 'Forgot password salt',
+            },
 
-    User.belongsTo(models.Role, {
-      as: 'Role',
-      constraints: true,
-      foreignKey: {
-        name: 'roleId',
-        field: 'role_id',
-        allowNull: false,
-      },
-    });
+            status: {
+                field: 'status',
+                type: DataTypes.ENUM('ACTIVE', 'INACTIVE'),
+                allowNull: false,
+                defaultValue: 'ACTIVE',
+                comment: 'User is active, inactive',
+            },
+        }
 
-    User.belongsToMany(models.Permission, {
-      through: 'user_permission',
-      as: 'UserPermission',
-      constraints: true,
-      foreignKey: {
-        name: 'userId',
-        field: 'user_id',
-        allowNull: false,
-      },
-    });
-  };
+        static property = {
+            freezeTableName: true,
+            tableName: 'users',
+        }
 
-  return User;
-};
+        static associate = Model => (models) => {
+            Model.belongsTo(models.Company, {
+                as: 'Company',
+                constraints: true,
+                foreignKey: {
+                    name: 'companyId',
+                    field: 'company_id',
+                    allowNull: false,
+                },
+            });
+
+            Model.belongsTo(models.Role, {
+                as: 'Role',
+                constraints: true,
+                foreignKey: {
+                    name: 'roleId',
+                    field: 'role_id',
+                    allowNull: false,
+                },
+            });
+
+            Model.belongsToMany(models.Permission, {
+                through: 'user_permission',
+                as: 'UserPermission',
+                constraints: true,
+                foreignKey: {
+                    name: 'userId',
+                    field: 'user_id',
+                    allowNull: false,
+                },
+            });
+        };
+    }
+
+    const UserModel = sequelize.define('User', User.definition, User.property);
+
+    UserModel.associate = User.associate(UserModel);
+
+    return UserModel;
+}
