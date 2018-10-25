@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     freezeTableName: true,
-    tableName: 'country',
+    tableName: 'countries',
   });
   return Country;
 };

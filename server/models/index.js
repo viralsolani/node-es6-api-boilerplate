@@ -8,7 +8,10 @@ const config = require(`${__dirname}/../config/config.json`)[env]; // eslint-dis
 const db = {};
 
 const {
-  username, password, database, ...otherConfig
+  username,
+  password,
+  database,
+  ...otherConfig
 } = config;
 
 const sequelize = new Sequelize(

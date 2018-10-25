@@ -67,9 +67,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     freezeTableName: true,
-    tableName: 'company',
+    tableName: 'companies',
   });
   Company.associate = (models) => {
+
     Company.belongsTo(models.Country, {
       as: 'Country',
       constraints: true,

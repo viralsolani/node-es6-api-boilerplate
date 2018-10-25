@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     freezeTableName: true,
-    tableName: 'permission',
+    tableName: 'permissions',
   });
 
   Permission.associate = (models) => {

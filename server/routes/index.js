@@ -1,10 +1,24 @@
 const express = require('express');
+const { User } = require('../../server/models');
 
 const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
+  // console.log({User}, User.getUserById)
+  User.getUserById(1).then(data => console.log(data));
+  User.findAll({
+    where: {
+      id: 1,
+    },
+    include: ['Company'],
+  }).then(([user]) => {
+    console.log({user})
+    res.render('index', {
+      title: 'Express',
+      user,
+    });
+  });
 });
 
 

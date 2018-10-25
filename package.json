@@ -6,7 +6,8 @@
   "scripts": {
     "start:dev": "nodemon ./bin/www",
     "start": "cross-env DEBUG=express-sequelize nodemon ./bin/www",
-    "lint": "eslint --fix",
+    "start-debug": "cross-env DEBUG=express-sequelize nodemon --inspect-brk ./bin/www",
+    "lint": "eslint --fix 'server/**'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,14 +33,24 @@
     "sequelize": "^4.39.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.7.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "faker": "^4.1.0",
     "nodemon": "^1.18.4",
-    "sequelize-cli": "^4.1.1"
+    "sequelize-cli": "^4.1.1",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0"
   }
 }

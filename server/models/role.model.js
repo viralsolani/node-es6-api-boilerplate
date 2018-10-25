@@ -31,11 +31,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     freezeTableName: true,
-    tableName: 'role',
+    tableName: 'roles',
   });
 
   Role.associate = (models) => {
-
     Role.belongsTo(models.Company, {
       as: 'Company',
       constraints: true,
