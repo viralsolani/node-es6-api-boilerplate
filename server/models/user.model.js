@@ -84,9 +84,13 @@ export default (sequelize, DataTypes) => {
             tableName: 'users',
         }
 
-        getUserById(id = null) {
+        static getUserById(id = null) {
 
             return this.findById(id);
+        }
+
+        get fullName() {
+            return `${this.firstName} ${this.lastName}`.trim();
         }
 
         static associate(models) {

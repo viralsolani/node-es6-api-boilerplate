@@ -8,12 +8,16 @@ export const sanitizeModel = (sequelize, Model) => {
 
     for (const prop of props) {
 
-        SanitizedModel[prop] = Model[prop];
+        Object.defineProperty(SanitizedModel, prop, {
+            ...Object.getOwnPropertyDescriptor(Model, prop),
+        })
     }
 
     for (const proto of protos) {
 
-        SanitizedModel[proto] = Model.prototype[proto];
+        Object.defineProperty(SanitizedModel.prototype, proto, {
+            ...Object.getOwnPropertyDescriptor(Model.prototype, proto),
+        })
     }
 
     return SanitizedModel;
