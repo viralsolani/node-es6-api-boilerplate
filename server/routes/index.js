@@ -5,15 +5,17 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+
   User.findAll({
     where: {
-      id: 1
+      id: 1,
     },
-    include: ['Company']
+    include: ['Company'],
   }).then(([user]) => {
+    console.log({user})
     res.render('index', {
       title: 'Express',
-      user
+      user,
     });
   });
 });

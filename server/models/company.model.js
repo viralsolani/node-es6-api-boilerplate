@@ -70,6 +70,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'companies',
   });
   Company.associate = (models) => {
+
     Company.belongsTo(models.Country, {
       as: 'Country',
       constraints: true,
