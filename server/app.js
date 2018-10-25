@@ -7,10 +7,7 @@ import bodyParser from 'body-parser';
 import indexRouter from './routes/index';
 
 class App {
-
-
   constructor() {
-
     // Set up the express app
     this.app = express();
 
@@ -27,7 +24,6 @@ class App {
    *
    */
   setupViewEngine() {
-
     // view engine setup
     this.app.set('views', path.join(__dirname, 'views'));
     this.app.set('view engine', 'pug');
@@ -41,12 +37,11 @@ class App {
    *
    */
   setupMiddlewares() {
-
     // Log requests to the console.
     this.app.use(logger('dev'));
     this.app.use(express.json());
     this.app.use(express.urlencoded({
-      extended: false
+      extended: false,
     }));
   }
 
@@ -70,7 +65,6 @@ class App {
    *
    */
   handleNotFoundError() {
-
     // catch 404 and forward to error handler
     this.app.use((req, res, next) => {
       next(createError(404));
@@ -82,7 +76,6 @@ class App {
    *
    */
   applyRoutes() {
-
     this.app.use('/', indexRouter);
   }
 
@@ -91,7 +84,6 @@ class App {
    *
    */
   handleErrors() {
-
     // error handler
     this.app.use((err, req, res, next) => {
       // set locals, only providing error in development

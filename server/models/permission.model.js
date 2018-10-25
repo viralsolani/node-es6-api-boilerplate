@@ -1,71 +1,71 @@
-module.exports = (sequelize, DataTypes) => {
-  const Permission = sequelize.define('Permission', {
-    id: {
-      type: DataTypes.INTEGER(2).UNSIGNED,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-      comment: 'Primary and auto increment key of the table',
-    },
+import {
+  sanitizeModel
+} from "../utils/model-helper";
 
-    permissionName: {
-      field: 'permission_name',
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      comment: 'Name of permission',
-    },
+export default (sequelize, DataTypes) => {
+  class Permission {
+    static definition = {
 
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      defaultValue: null,
-      comment: 'Permission description',
-    },
-
-    status: {
-      field: 'status',
-      type: DataTypes.ENUM('ACTIVE', 'INACTIVE'),
-      allowNull: false,
-      defaultValue: 'ACTIVE',
-      comment: 'Permission is active, inactive',
-    },
-  }, {
-    freezeTableName: true,
-    tableName: 'permissions',
-  });
-
-  Permission.associate = (models) => {
-    Permission.belongsTo(models.PermissionGroup, {
-      as: 'PermissionGroup',
-      constraints: true,
-      foreignKey: {
-        name: 'permissionGroupId',
-        field: 'permission_group_id',
+      id: {
+        type: DataTypes.INTEGER(2).UNSIGNED,
         allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+        comment: 'Primary and auto increment key of the table',
       },
-    });
 
-    Permission.belongsToMany(models.Role, {
-      through: 'role_permission',
-      as: 'RolePermission',
-      constraints: true,
-      foreignKey: {
-        name: 'permissionId',
-        field: 'permission_id',
+      permissionName: {
+        field: 'permission_name',
+        type: DataTypes.STRING(50),
         allowNull: false,
+        comment: 'Name of permission',
       },
-    });
 
-    Permission.belongsToMany(models.User, {
-      through: 'user_permission',
-      as: 'UserPermission',
-      constraints: true,
-      foreignKey: {
-        name: 'permissionId',
-        field: 'permission_id',
-        allowNull: false,
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        defaultValue: null,
+        comment: 'Permission description',
       },
-    });
-  };
-  return Permission;
-};
+
+      status: {
+        field: 'status',
+        type: DataTypes.ENUM('ACTIVE', 'INACTIVE'),
+        allowNull: false,
+        defaultValue: 'ACTIVE',
+        comment: 'Permission is active, inactive',
+      },
+
+    }
+
+    static modelOptions = {
+      freezeTableName: true,
+      tableName: 'permissions',
+    }
+
+    static associate(models) {
+      this.belongsTo(models.PermissionGroup, {
+        as: 'PermissionGroup',
+        constraints: true,
+        foreignKey: {
+          name: 'permissionGroupId',
+          field: 'permission_group_id',
+          allowNull: false,
+        },
+      });
+
+      this.belongsToMany(models.Role, {
+        through: 'role_permission',
+        as: 'RolePermission',
+        constraints: true,
+        foreignKey: {
+          name: 'permissionId',
+          field: 'permission_id',
+          allowNull: false,
+        },
+      });
+
+    }
+  }
+  return sanitizeModel(sequelize, Permission);
+}

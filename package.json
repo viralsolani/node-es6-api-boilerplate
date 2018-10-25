@@ -7,7 +7,7 @@
     "start:dev": "nodemon ./bin/www",
     "start": "cross-env DEBUG=express-sequelize nodemon ./bin/www",
     "start-debug": "cross-env DEBUG=express-sequelize nodemon --inspect-brk ./bin/www",
-    "lint": "eslint --fix",
+    "lint": "eslint --fix 'server/**'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,7 +30,7 @@
     "morgan": "^1.9.1",
     "mysql2": "^1.6.1",
     "pug": "2.0.0-beta11",
-    "sequelize": "^4.39.1"
+    "sequelize": "^4.41.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

@@ -1,3 +1,7 @@
+import {
+    sanitizeModel
+} from "../utils/model-helper";
+
 export default (sequelize, DataTypes) => {
 
     class User {
@@ -36,10 +40,10 @@ export default (sequelize, DataTypes) => {
                         const self = this;
 
                         User.find({
-                            where: {
-                                email: value,
-                            },
-                        })
+                                where: {
+                                    email: value,
+                                },
+                            })
                             .then((user) => {
                                 if (user && self.id !== user.id) {
                                     return next('Email is already in use');
@@ -77,13 +81,23 @@ export default (sequelize, DataTypes) => {
             },
         }
 
-        static property = {
+        static modelOptions = {
             freezeTableName: true,
             tableName: 'users',
         }
 
-        static associate = Model => (models) => {
-            Model.belongsTo(models.Company, {
+        static getUserById(id = null) {
+
+            return this.findById(id);
+        }
+
+        get fullName() {
+            return `${this.firstName} ${this.lastName}`.trim();
+        }
+
+        static associate(models) {
+
+            this.belongsTo(models.Company, {
                 as: 'Company',
                 constraints: true,
                 foreignKey: {
@@ -93,7 +107,7 @@ export default (sequelize, DataTypes) => {
                 },
             });
 
-            Model.belongsTo(models.Role, {
+            this.belongsTo(models.Role, {
                 as: 'Role',
                 constraints: true,
                 foreignKey: {
@@ -103,7 +117,7 @@ export default (sequelize, DataTypes) => {
                 },
             });
 
-            Model.belongsToMany(models.Permission, {
+            this.belongsToMany(models.Permission, {
                 through: 'user_permission',
                 as: 'UserPermission',
                 constraints: true,
@@ -116,9 +130,5 @@ export default (sequelize, DataTypes) => {
         };
     }
 
-    const UserModel = sequelize.define('User', User.definition, User.property);
-
-    UserModel.associate = User.associate(UserModel);
-
-    return UserModel;
+    return sanitizeModel(sequelize, User);
 }
