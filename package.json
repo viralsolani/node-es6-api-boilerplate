@@ -7,7 +7,7 @@
     "start:dev": "nodemon ./bin/www",
     "start": "cross-env DEBUG=express-sequelize nodemon ./bin/www",
     "start-debug": "cross-env DEBUG=express-sequelize nodemon --inspect-brk ./bin/www",
-    "lint": "eslint --fix",
+    "lint": "eslint --fix 'server/**'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

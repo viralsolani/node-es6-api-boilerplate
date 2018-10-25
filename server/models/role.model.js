@@ -35,7 +35,6 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Role.associate = (models) => {
-
     Role.belongsTo(models.Company, {
       as: 'Company',
       constraints: true,
