@@ -1,4 +1,6 @@
-import { sanitizeModel } from "../utils/model-helper";
+import {
+    sanitizeModel
+} from "../utils/model-helper";
 
 export default (sequelize, DataTypes) => {
 
@@ -38,18 +40,18 @@ export default (sequelize, DataTypes) => {
                         const self = this;
 
                         User.find({
-                            where: {
-                                email: value,
-                            },
-                        })
-                        .then((user) => {
-                            if (user && self.id !== user.id) {
-                                return next('Email is already in use');
-                            }
+                                where: {
+                                    email: value,
+                                },
+                            })
+                            .then((user) => {
+                                if (user && self.id !== user.id) {
+                                    return next('Email is already in use');
+                                }
 
-                            return next();
-                        })
-                        .catch(err => next(err));
+                                return next();
+                            })
+                            .catch(err => next(err));
                     },
                 },
             },

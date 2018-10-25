@@ -1,5 +1,7 @@
 const express = require('express');
-const { User } = require('../../server/models');
+const {
+  User,
+} = require('../../server/models');
 
 const router = express.Router();
 
@@ -13,7 +15,9 @@ router.get('/', (req, res, next) => {
     },
     include: ['Company'],
   }).then(([user]) => {
-    console.log({user})
+    console.log({
+      user
+    })
     res.render('index', {
       title: 'Express',
       user,
