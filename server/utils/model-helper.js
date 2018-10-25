@@ -1,4 +1,4 @@
-module.export const sanitizeModel = (sequelize, Model) => {
+export const sanitizeModel = (sequelize, Model) => {
 
     const SanitizedModel = sequelize.define(Model.name, Model.definition, Model.modelOptions);
 
