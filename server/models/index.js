@@ -1,6 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
+import fs from 'fs';
+import path from 'path';
+import Sequelize from 'sequelize';
+import { sanitizeModel } from "../utils/model-helper";
 
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
@@ -24,7 +25,12 @@ fs
     (file !== basename) &&
     (file.slice(-3) === '.js'))
   .forEach((file) => {
-    const model = sequelize.import(path.join(__dirname, file));
+
+    const model = sanitizeModel(
+      sequelize,
+      require(path.join(__dirname, file)).default
+    );
+
     db[model.name] = model;
   });
 
