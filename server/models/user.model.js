@@ -35,7 +35,7 @@ export default class User {
                 isUnique(value, next) {
                     const self = this;
 
-                    User.find({
+                    this.find({
                             where: {
                                 email: value,
                             },
