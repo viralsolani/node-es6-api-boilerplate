@@ -8,7 +8,8 @@
     "start": "cross-env DEBUG=express-sequelize nodemon ./bin/www",
     "start-debug": "cross-env DEBUG=express-sequelize nodemon --inspect-brk ./bin/www",
     "lint": "eslint --fix 'server/**'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "sequelize db:seed:all"
   },
   "repository": {
     "type": "git",
