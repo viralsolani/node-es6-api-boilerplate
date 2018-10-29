@@ -16,7 +16,7 @@
     "url": "git+https://github.com/viralsolani/node-es6-webpack-api-boilerplate.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/viralsolani/node-es6-webpack-api-boilerplate/issues"
   },
