@@ -30,26 +30,26 @@ export default class User {
             field: 'email',
             type: DataTypes.STRING(50),
             allowNull: false,
-            comment: 'Email of user',
-            validate: {
-                isUnique(value, next) {
-                    const self = this;
+            comment: 'Email of user'
+            // validate: {
+            //     isUnique(value, next) {
+            //         const self = this;
 
-                    this.find({
-                            where: {
-                                email: value,
-                            },
-                        })
-                        .then((user) => {
-                            if (user && self.id !== user.id) {
-                                return next('Email is already in use');
-                            }
+            //         this.find({
+            //                 where: {
+            //                     email: value,
+            //                 },
+            //             })
+            //             .then((user) => {
+            //                 if (user && self.id !== user.id) {
+            //                     return next('Email is already in use');
+            //                 }
 
-                            return next();
-                        })
-                        .catch(err => next(err));
-                },
-            },
+            //                 return next();
+            //             })
+            //             .catch(err => next(err));
+            //     },
+            // },
         },
 
         password: {

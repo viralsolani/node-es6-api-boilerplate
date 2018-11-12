@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import indexRouter from './routes/index';
+import AuthController from './auth/AuthController';
 
 class App {
   constructor() {
@@ -78,6 +79,7 @@ class App {
    */
   applyRoutes() {
     this.app.use('/', indexRouter);
+    this.app.use('/api/auth', AuthController);
   }
 
   /**
