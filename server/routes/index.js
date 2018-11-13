@@ -1,7 +1,5 @@
-const express = require('express');
-const {
-  User,
-} = require('../../server/models');
+import express from 'express';
+import { User } from '../../server/models';
 
 const router = express.Router();
 
