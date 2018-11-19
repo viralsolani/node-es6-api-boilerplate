@@ -1,11 +1,10 @@
 import express from 'express';
-import { User } from '../../server/models';
+import { User } from '../models';
 
 const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-
   User.getUserById(1).then(data => console.log(data));
   User.findAll({
     where: {
@@ -14,8 +13,8 @@ router.get('/', (req, res, next) => {
     include: ['Company'],
   }).then(([user]) => {
     console.log({
-      user
-    })
+      user,
+    });
     res.render('index', {
       title: 'Express',
       user,

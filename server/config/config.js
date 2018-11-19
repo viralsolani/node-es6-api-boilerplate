@@ -9,7 +9,7 @@ module.exports = {
       timestamps: true,
       underscored: true,
     },
-    secret: 'ASuperStrongSecret'
+    secret: 'ASuperStrongSecret',
   },
   test: {
     username: process.env.DB_USERNAME || 'root',
@@ -17,7 +17,7 @@ module.exports = {
     database: process.env.DB_DATABASE || 'node_api_boilerplate',
     host: process.env.DB_HOST || '127.0.0.1',
     dialect: 'mysql',
-    secret: 'ASuperStrongSecret'
+    secret: 'ASuperStrongSecret',
   },
   production: {
     username: process.env.DB_USERNAME || 'root',
@@ -25,6 +25,6 @@ module.exports = {
     database: process.env.DB_DATABASE || 'node_api_boilerplate',
     host: process.env.DB_HOST || '127.0.0.1',
     dialect: 'mysql',
-    secret: 'ASuperStrongSecret'
+    secret: 'ASuperStrongSecret',
   },
 };

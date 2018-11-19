@@ -7,9 +7,10 @@
     "start:dev": "nodemon ./bin/www",
     "start": "cross-env DEBUG=express-sequelize nodemon ./bin/www",
     "start-debug": "cross-env DEBUG=express-sequelize nodemon --inspect-brk ./bin/www",
-    "lint": "eslint --fix 'server/**'",
+    "lint": "eslint --fix --ignore-path .gitignore . 'server/**'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "sequelize db:seed:all"
+    "seed": "sequelize db:seed:all --debug",
+    "revert-seed": "sequelize db:seed:undo:all"
   },
   "repository": {
     "type": "git",

@@ -24,14 +24,13 @@ const db = {};
 
 fs
   .readdirSync(__dirname)
-  .filter(file => (file.indexOf('.') !== 0) &&
-    (file !== basename) &&
-    (file.slice(-3) === '.js'))
+  .filter(file => (file.indexOf('.') !== 0)
+    && (file !== basename)
+    && (file.slice(-3) === '.js'))
   .forEach((file) => {
-
     const model = sanitizeModel(
       sequelize,
-      require(path.join(__dirname, file)).default
+      require(path.join(__dirname, file)).default,
     );
 
     db[model.name] = model;

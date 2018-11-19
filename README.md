@@ -21,7 +21,7 @@ Run the npm installation script
 
 Run seeders
 
-    `node_modules/.bin/sequelize db:seed:all`
+    `npm run seed`
     
 Copy `.env.sample` file and create `.env` file, and change the values according to your configuration like:
   
